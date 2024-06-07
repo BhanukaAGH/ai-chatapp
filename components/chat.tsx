@@ -1,4 +1,6 @@
-import { Message } from 'ai/react'
+'use client'
+
+import { useChat } from 'ai/react'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -6,20 +8,8 @@ import ChatBubble from '@/components/chat-bubble'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 const Chat = () => {
-  const messages = [
-    {
-      role: 'assistant',
-      content: 'Hello, how can I help you?',
-    },
-    {
-      role: 'user',
-      content: 'I want to buy a new computer',
-    },
-    {
-      role: 'assistant',
-      content: 'Ok, what is your budget?',
-    },
-  ] satisfies Partial<Message>[]
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat()
 
   return (
     <div className='flex h-[90vh] flex-col justify-between'>
@@ -35,11 +25,16 @@ const Chat = () => {
         </div>
       </ScrollArea>
 
-      <form className='p-4 flex clear-both'>
-        <Input placeholder='Type to chat with AI...' className='mr-2' />
+      <form onSubmit={handleSubmit} className='p-4 flex clear-both'>
+        <Input
+          value={input}
+          onChange={handleInputChange}
+          placeholder='Type to chat with AI...'
+          className='mr-2'
+        />
 
         <Button type='submit' className='w-24'>
-          Ask
+          {isLoading ? 'Loading...' : 'Ask'}
         </Button>
       </form>
     </div>

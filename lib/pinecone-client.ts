@@ -35,8 +35,6 @@ export const initPinecone = async () => {
 
     if (!existingIndexes.indexes?.find((index) => index.name === indexName)) {
       await createIndex(pinecone, indexName)
-    } else {
-      console.log('Index already exists.')
     }
 
     return pinecone
