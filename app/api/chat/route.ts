@@ -3,14 +3,15 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from '@langchain/core/prompts'
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
+import { createRetrievalChain } from 'langchain/chains/retrieval'
 import { LangChainStream, Message, StreamingTextResponse } from 'ai'
+import { createStuffDocumentsChain } from 'langchain/chains/combine_documents'
+import { AIMessage, ChatMessage, HumanMessage } from '@langchain/core/messages'
+import { createHistoryAwareRetriever } from 'langchain/chains/history_aware_retriever'
+
 import { getVectorStore } from '@/lib/vector-store'
 import { getPineconeClient } from '@/lib/pinecone-client'
-import { AIMessage, ChatMessage, HumanMessage } from '@langchain/core/messages'
-import { createStuffDocumentsChain } from 'langchain/chains/combine_documents'
-import { createHistoryAwareRetriever } from 'langchain/chains/history_aware_retriever'
-import { createRetrievalChain } from 'langchain/chains/retrieval'
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 
 const convertVercelMessageToLangChainMessage = (message: Message) => {
   if (message.role === 'user') {
@@ -48,10 +49,12 @@ export const POST = async (req: Request) => {
       model: 'gemini-pro',
       streaming: true,
       callbacks: [handlers],
+      temperature: 0,
     })
 
     const rephrasingModel = new ChatGoogleGenerativeAI({
       model: 'gemini-pro',
+      temperature: 0,
     })
 
     // Contextualize question
