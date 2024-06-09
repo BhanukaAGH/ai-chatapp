@@ -41,7 +41,7 @@ const ChatBubble = ({ role = 'assistant', content }: ChatBubbleProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent className='text-sm'>
-          <Markdown className='prose prose-invert'>{content}</Markdown>
+          <Markdown className='prose dark:prose-invert'>{content}</Markdown>
         </CardContent>
       </Card>
     </div>
