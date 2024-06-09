@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
@@ -9,9 +9,19 @@ import { LangChainStream, Message, StreamingTextResponse } from 'ai'
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents'
 import { AIMessage, ChatMessage, HumanMessage } from '@langchain/core/messages'
 import { createHistoryAwareRetriever } from 'langchain/chains/history_aware_retriever'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
 
 import { getVectorStore } from '@/lib/vector-store'
 import { getPineconeClient } from '@/lib/pinecone-client'
+
+// Create a new ratelimiter
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(10, '10 s'),
+  prefix: '@upstash/ratelimit',
+  analytics: true,
+})
 
 const convertVercelMessageToLangChainMessage = (message: Message) => {
   if (message.role === 'user') {
@@ -23,7 +33,17 @@ const convertVercelMessageToLangChainMessage = (message: Message) => {
   }
 }
 
-export const POST = async (req: Request) => {
+export const POST = async (req: NextRequest) => {
+  const { success } = await ratelimit.limit(
+    req.ip || (req.headers.get('X-Forwarded-For') as string)
+  )
+
+  if (!success) {
+    return NextResponse.json('Error: Too many requests', {
+      status: 429,
+    })
+  }
+
   const body = await req.json()
   const messages: Message[] = body.messages ?? []
   const previousMessages = messages
@@ -49,12 +69,12 @@ export const POST = async (req: Request) => {
       model: 'gemini-pro',
       streaming: true,
       callbacks: [handlers],
-      temperature: 0,
+      temperature: 0.0,
     })
 
     const rephrasingModel = new ChatGoogleGenerativeAI({
       model: 'gemini-pro',
-      temperature: 0,
+      temperature: 0.0,
     })
 
     // Contextualize question

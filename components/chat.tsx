@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useChat } from 'ai/react'
 import { useEffect, useRef } from 'react'
 
@@ -13,7 +14,7 @@ import { LoaderCircle, SendHorizontal } from 'lucide-react'
 
 const Chat = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
     useChat({
       initialMessages: [
         {
@@ -32,6 +33,12 @@ const Chat = () => {
 
     return () => clearTimeout(timeOut)
   }, [messages])
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message)
+    }
+  }, [error])
 
   return (
     <div className='flex flex-col justify-between gap-6 h-full'>

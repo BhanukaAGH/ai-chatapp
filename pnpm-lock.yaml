@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@langchain/community':
         specifier: ^0.2.4
-        version: 0.2.4(@pinecone-database/pinecone@2.2.1)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1)
+        version: 0.2.4(@pinecone-database/pinecone@2.2.1)(@upstash/ratelimit@1.2.0)(@upstash/redis@1.31.3)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1)
       '@langchain/core':
         specifier: ^0.2.5
         version: 0.2.5(langchain@0.2.4(@pinecone-database/pinecone@2.2.1)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1))(openai@4.47.2(encoding@0.1.13))
@@ -35,6 +35,12 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.3.3)(react@18.3.1)
+      '@upstash/ratelimit':
+        specifier: ^1.2.0
+        version: 1.2.0
+      '@upstash/redis':
+        specifier: ^1.31.3
+        version: 1.31.3
       ai:
         specifier: ^3.1.21
         version: 3.1.21(openai@4.47.2(encoding@0.1.13))(react@18.3.1)(solid-js@1.8.17)(svelte@4.2.17)(vue@3.4.27(typescript@5.4.5))(zod@3.23.8)
@@ -71,6 +77,9 @@ importers:
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.3.3)(react@18.3.1)
+      sonner:
+        specifier: ^1.5.0
+        version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1222,6 +1231,16 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
+  '@upstash/core-analytics@0.0.9':
+    resolution: {integrity: sha512-9NXXxZ5y1/A/zqKLlVT7NsAWSggJfOjB0hG6Ffx29b4jbzHOiQVWB55h5+j2clT9Ib+mNPXn0iB5zN3aWLkICw==}
+    engines: {node: '>=16.0.0'}
+
+  '@upstash/ratelimit@1.2.0':
+    resolution: {integrity: sha512-03mNBUNz9EvIJCxhU0OtFWO3OSQE4gShFBlGph+hDPm9k7O75We1NYS/tCXSdmLVXtOvUGSmi5fyKQLBTEGWxw==}
+
+  '@upstash/redis@1.31.3':
+    resolution: {integrity: sha512-KtVgWBUEx/LGbR8oRwYexwzHh3s5DNqYW0bjkD+gjFZVOnREJITvK+hC4PjSSD+8D4qJ+Xbkfmy8ANADZ9EUFg==}
+
   '@vue/compiler-core@3.4.27':
     resolution: {integrity: sha512-E+RyqY24KnyDXsCuQrI+mlcdW3ALND6U7Gqa/+bVwbcpcR3BRRIckFoz7Qyd4TTlnugtwuI7YgjbvsLmxb+yvg==}
 
@@ -1521,6 +1540,9 @@ packages:
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   css-tree@2.3.1:
     resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
@@ -3189,6 +3211,12 @@ packages:
       solid-js: ^1.2
       swr-store: ^0.10
 
+  sonner@1.5.0:
+    resolution: {integrity: sha512-FBjhG/gnnbN6FY0jaNnqZOMmB73R+5IiyYAw8yBj7L54ER7HB3fOSE5OFiQiE2iXWxeXKvg6fIP4LtVppHEdJA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -3724,7 +3752,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@langchain/community@0.2.4(@pinecone-database/pinecone@2.2.1)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1)':
+  '@langchain/community@0.2.4(@pinecone-database/pinecone@2.2.1)(@upstash/ratelimit@1.2.0)(@upstash/redis@1.31.3)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1)':
     dependencies:
       '@langchain/core': 0.2.5(langchain@0.2.3(@pinecone-database/pinecone@2.2.1)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1))(openai@4.47.2(encoding@0.1.13))
       '@langchain/openai': 0.0.34(encoding@0.1.13)(langchain@0.2.3(@pinecone-database/pinecone@2.2.1)(encoding@0.1.13)(ignore@5.3.1)(openai@4.47.2(encoding@0.1.13))(pdf-parse@1.1.1))
@@ -3739,6 +3767,8 @@ snapshots:
       zod-to-json-schema: 3.22.5(zod@3.23.8)
     optionalDependencies:
       '@pinecone-database/pinecone': 2.2.1
+      '@upstash/ratelimit': 1.2.0
+      '@upstash/redis': 1.31.3
       ignore: 5.3.1
       pdf-parse: 1.1.1
     transitivePeerDependencies:
@@ -4310,6 +4340,18 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
+  '@upstash/core-analytics@0.0.9':
+    dependencies:
+      '@upstash/redis': 1.31.3
+
+  '@upstash/ratelimit@1.2.0':
+    dependencies:
+      '@upstash/core-analytics': 0.0.9
+
+  '@upstash/redis@1.31.3':
+    dependencies:
+      crypto-js: 4.2.0
+
   '@vue/compiler-core@3.4.27':
     dependencies:
       '@babel/parser': 7.24.6
@@ -4656,6 +4698,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  crypto-js@4.2.0: {}
 
   css-tree@2.3.1:
     dependencies:
@@ -6397,6 +6441,11 @@ snapshots:
     dependencies:
       solid-js: 1.8.17
       swr-store: 0.10.6
+
+  sonner@1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   source-map-js@1.2.0: {}
 
